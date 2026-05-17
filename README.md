@@ -1,132 +1,66 @@
-# 🎧 EchoPulse
-**Sound-to-Haptic Alert System for Deaf Users**
+## 🚀 Quick Start
 
-Built by **Team Shotgun API** for [Hackathon Name]
+### Backend (Local Server)
 
----
-
-## 🚀 Quick Demo
-[Link to demo video or live deployment]
-
----
-
-## 💡 The Problem
-466 million deaf people worldwide miss critical safety alerts:
-- Fire alarms
-- Car horns  
-- Doorbells
-- Baby crying
-
-Current solutions cost $500+ and only work in one room.
-
----
-
-## ✨ Our Solution
-EchoPulse turns any smartphone into an intelligent safety system using AI to detect emergency sounds and convert them into haptic vibrations.
-
----
-
-## 🎯 Key Features
-- ✅ Real-time AI sound detection (MIT AST model)
-- ✅ 7 critical sound categories
-- ✅ Custom vibration patterns
-- ✅ AI confidence scores
-- ✅ Smart cooldown (no spam)
-- ✅ Daily statistics tracking
-- ✅ 100% free
-
----
-
-## 🛠 Tech Stack
-
-**Frontend:**
-- React Native (Expo)
-- expo-av for audio recording
-- Animated API for UX
-
-**Backend:**
-- Flask (Python)
-- Transformers (Hugging Face)
-- MIT/ast-finetuned-audioset-10-10-0.4593
-- FFmpeg for audio preprocessing
-- Deployed on Railway
-
-**AI Model:**
-- Pre-trained on 2M+ audio samples
-- 527 sound classes → 7 critical alerts
-- 85-95% accuracy
-
----
-
-## 📱 Installation
-
-### Frontend (Mobile App)
-```bash
-cd frontend
-npm install
-npx expo start
-```
-
-### Backend (API)
+1. **Install dependencies:**
 ```bash
 cd backend
 pip install -r requirements.txt
-python app.py
 ```
 
-**Backend URL:** [Your Railway URL]
+2. **Install FFmpeg:**
+   - macOS: `brew install ffmpeg`
+   - Windows: Download from ffmpeg.org
+   - Linux: `sudo apt-get install ffmpeg`
+
+3. **Start server:**
+```bash
+python realtime_detector.py
+```
+
+4. **Expose with ngrok:**
+```bash
+ngrok http 5000
+```
+
+5. **Copy ngrok URL** and update `BACKEND_URL` in `frontend/App.js`
+
+### Frontend (Mobile App)
+
+1. **Install dependencies:**
+```bash
+cd frontend
+npm install
+```
+
+2. **Update backend URL** in `App.js`:
+```javascript
+const BACKEND_URL = "https://YOUR-NGROK-URL.ngrok-free.app/predict";
+```
+
+3. **Start Expo:**
+```bash
+npx expo start
+```
+
+4. **Scan QR code** with Expo Go app on your phone
 
 ---
 
-## 🎬 Demo Instructions
-1. Press START
-2. Play a car horn sound (YouTube)
-3. Watch detection with confidence score
-4. Check Settings for customization
+## 🔧 Architecture
 
----
-
-## 👥 Team
-- Person 1: [Role]
-- Person 2: Backend Lead
-- Person 3: Mobile Lead (You!)
-- Person 4: Integration
-- Person 5: Demo/Presentation
-
----
-
-## 🏆 Hackathon Submission
-- **Category:** Accessibility / Social Impact
-- **Duration:** 30 hours
-- **Status:** ✅ Fully functional
-
----
-
-## 📊 Impact
-- **Market:** 466M deaf users worldwide
-- **TAM:** $500M+
-- **Advantage:** Portable, free, AI-powered
-
----
-
-## 🔮 Future Roadmap
-- Emergency contact SMS alerts
-- Smart home integration
-- Custom sound training
-- App store launch
-
----
-
-## 📄 License
-MIT License
-
----
-
-## 🙏 Acknowledgments
-- MIT for the Audio Spectrogram Transformer model
-- Hugging Face for ML infrastructure
-- Railway for deployment
-
----
-
-**Built with ❤️ for accessibility**
+```
+Mobile App (React Native)
+    ↓ Records 3-second audio clip
+    ↓ HTTP POST to backend
+Flask Server (Local + ngrok)
+    ↓ FFmpeg preprocessing
+    ↓ Audio → 16kHz mono
+MIT Audio Transformer
+    ↓ Classification
+    ↓ Returns label + confidence
+Mobile App
+    ↓ Maps label to sound type
+    ↓ Triggers vibration + flash
+User Gets Alert! 🎉
+```
