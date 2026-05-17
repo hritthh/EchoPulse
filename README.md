@@ -69,7 +69,7 @@ cd frontend
 npm install
 
 # Update backend URL in App.js
-const BACKEND_URL = "https://YOUR-NGROK-URL.ngrok-free.app/predict";
+const BACKEND_URL = "https://trekker-unleaded-overspend.ngrok-free.dev/predict";
 
 # Start app
 npx expo start
